@@ -26,6 +26,6 @@ FLOSS looks at the similarity between a given ribosome footprint (RFP) length di
 
 ## Ribosome release score (RRS)
 
-Ribosome release score (RRS) was first defined by Li et.al in their [Cell paper](https://www.sciencedirect.com/science/article/pii/S0092867413007113)
+Ribosome release score (RRS) was first defined by Guttman et.al in their [Cell paper](https://www.sciencedirect.com/science/article/pii/S0092867413007113)
 
 RRS identifies functional protein-coding transcripts with greater sensitivity by detecting the termination of translation at the end of an ORF.
