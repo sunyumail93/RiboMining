@@ -1,10 +1,10 @@
 # RiboMining
 
-Mining of Ribo-seq data: Translation efficiency (TE) and FLOSS score calculation
+Mining of Ribo-seq data: Translation efficiency (TE), FLOSS score and Ribosome release score (RRS) calculation
 
 ## Translation efficiency (TE)
 
-Translation efficiency (TE) was first defined by Li et. al in their Cell paper (https://www.sciencedirect.com/science/article/pii/S0092867414002323)
+Translation efficiency (TE) was first defined by Li et. al in their [Cell paper](https://www.sciencedirect.com/science/article/pii/S0092867414002323)
 
 The rate of protein synthesis per mRNA (TE), as measured by protein synthesis rates (from ribosome profiling) divided by mRNA levels (from mRNA-seq)
 
@@ -23,3 +23,9 @@ FLOSS looks at the similarity between a given ribosome footprint (RFP) length di
 ```
 [Usage]
 ```
+
+## Ribosome release score (RRS)
+
+Ribosome release score (RRS) was first defined by Li et.al in their [Cell paper](https://www.sciencedirect.com/science/article/pii/S0092867413007113)
+
+RRS identifies functional protein-coding transcripts with greater sensitivity by detecting the termination of translation at the end of an ORF.
