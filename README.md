@@ -28,9 +28,10 @@ data/
 [Usage]
 TE_Calculator.sh -rpf [RPF.bed13] -g [Transcript.bed12] -rna [RNAseq.bed12] -o [OutputPrefix] -pseudo [Number|Optional, 1 by default]
 
-[Example data]
+[Example]
 TE_Calculator.sh -rpf data/Demo.RPF.bed13 -g data/mm10.RefSeq.bed12 -rna data/Demo.RNAseq.bed12 -o Demo
 ```
+The result will be a text file with TE scores for each transcript.
 
 ## Fragment length organization similarity score (FLOSS)
 
@@ -58,7 +59,7 @@ FLOSS_Reference.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optiona
 FLOSS_Distribution.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optional, default 12]
 FLOSS_DistributionSmRNA.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optional, default 0]
 
-[Wrokflow]
+[Example]
 #Step 1: Run FLOSS_Reference.sh to build a reference length distributino from the real data
 FLOSS_Reference.sh data/Demo.RPF.bed13 data/mm10.mRNA.cds.bed12 Demo
 #Output files:
@@ -85,6 +86,24 @@ Ribosome release score (RRS) was first defined by Guttman et.al in their [Cell p
 RRS identifies functional protein-coding transcripts with greater sensitivity by detecting the termination of translation at the end of an ORF.
 
 ```
-[Usage]
-```
+[Prerequisites]
+RRS_ConvertRPF2Bam.sh               #requires +x premission
+RRS_Calculator.sh                   #requires +x premission
+bin/
+  ├── BED12Extractor.sh             #requires +x premission
+  ├── CalculateRRS_BH.R
+  ├── GetRPF5end.sh                 #requires +x premission
+  └── Shift5endOffset_BED13RPF.py   #requires +x premission
+data/
+  ├── Demo.RPF.bed13
+  ├── Demo.smRNA.bed13
+  └── mm10.mRNA.cds.bed12
 
+[Usage]
+RRS_ConvertRPF2Bam.sh [Data.+jxn.bed13.RPF] [Genome|optional, default mm10]
+RRS_Calculator.sh -rpf [RPF.bed13.RPF] -g [Transcript.bed12] -rna [RNAseq.unique.bed12|Optional] -o [OutputPrefix] -genome [Genome|Optional, default:mm10]
+
+[Example]
+RRS_Calculator.sh -rpf data/Demo.RPF.bed13 -g mm10.mRNA.cds.bed12 -o Demo -genome
+```
+The result will be a text file with RRS scores for each transcript.
