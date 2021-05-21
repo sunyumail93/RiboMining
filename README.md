@@ -77,7 +77,9 @@ FLOSS_Distribution.sh data/Demo.RPF.bed13 data/mm10.mRNA.cds.bed12 Demo.FDis
   FLOSS_Plot.pdf
 ```
 ![](images/FLOSS.png)
+This script has been used in the following publication:
 
+Sun, Y.H., Zhu, J., Xie, L.H. et al. Ribosomes guide pachytene piRNA formation on long intergenic piRNA precursors. Nat Cell Biol 22, 200–212 (2020). https://doi.org/10.1038/s41556-019-0457-4
 
 ## Ribosome release score (RRS)
 
