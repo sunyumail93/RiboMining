@@ -2,16 +2,34 @@
 
 Mining of Ribo-seq data: Translation efficiency (TE), FLOSS score and Ribosome release score (RRS) calculation
 
-## Translation efficiency (TE)
+## Translation Efficiency (TE)
 
 Translation efficiency (TE) was first defined by Li et. al in their [Cell paper](https://www.sciencedirect.com/science/article/pii/S0092867414002323)
 
 The rate of protein synthesis per mRNA (TE), as measured by protein synthesis rates (from ribosome profiling) divided by mRNA levels (from mRNA-seq)
 
-Here we provide one script to calculate TE:
+The input data (RPF.bed13, RNAseq.bed12) can be acquired after running [PipeRiboseq](https://github.com/sunyumail93/PipeRiboseq) and [PipeRNAseq](https://github.com/sunyumail93/PipeRNAseq) pipelines.
+
+Here we provide one script, `TE_Calculator.sh`, to calculate TE:
 
 ```
+[Prerequisites]
+TE_Calculator.sh            #requires +x premission
+bin/
+  ├── BED12Extractor.sh     #requires +x premission
+  ├── CalculateTE_BH.R
+  └── CountBed12_Length.sh  #requires +x premission
+data/
+  ├── Demo.RNAseq.bed12
+  ├── Demo.RPF.bed13
+  ├── mm10.ChromInfo.txt
+  └── mm10.RefSeq.bed12
+
 [Usage]
+TE_Calculator.sh -rpf [RPF.bed13] -g [Transcript.bed12] -rna [RNAseq.bed12] -o [OutputPrefix] -pseudo [Number|Optional, 1 by default]
+
+[Example data]
+TE_Calculator.sh -rpf data/Demo.RPF.bed13 -g data/mm10.RefSeq.bed12 -rna data/Demo.RNAseq.bed12 -o Demo
 ```
 
 ## Fragment length organization similarity score (FLOSS)
@@ -20,9 +38,45 @@ Fragment length organization similarity score (FLOSS) was first defined by Ingol
 
 FLOSS looks at the similarity between a given ribosome footprint (RFP) length distribution and a reference (RFP length distribution on mRNA CDS regions). It measures the magnitude of disagreement between these two distributions, with lower scores reflecting higher similarity.
 
+The input data (RPF.bed13) can be acquired after running [PipeRiboseq](https://github.com/sunyumail93/PipeRiboseq).
+
 ```
+[Prerequisites]
+FLOSS_Distribution.sh               #requires +x premission
+FLOSS_DistributionSmRNA.sh          #requires +x premission
+FLOSS_Reference.sh                  #requires +x premission
+bin/
+  └── Shift5endOffset_BED13RPF.py   #requires +x premission
+data/
+  ├── Demo.RPF.bed13
+  ├── Demo.smRNA.bed13
+  └── mm10.mRNA.cds.bed12
+
+#This analysis contains the following scripts:
 [Usage]
+FLOSS_Reference.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optional, default 12]
+FLOSS_Distribution.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optional, default 12]
+FLOSS_DistributionSmRNA.sh [Data.bed13] [Reference.bed12] [OutputPrefix] [Offset|Optional, default 0]
+
+[Wrokflow]
+#Step 1: Run FLOSS_Reference.sh to build a reference length distributino from the real data
+FLOSS_Reference.sh data/Demo.RPF.bed13 data/mm10.mRNA.cds.bed12 Demo
+#Output files:
+  Demo.count
+  Demo.freq
+  
+#Step 2: Run FLOSS_Distribution.sh to calculate the Ribo-seq length distribution of each transcript
+FLOSS_Distribution.sh data/Demo.RPF.bed13 data/mm10.mRNA.cds.bed12 Demo.FDis
+#Output files:
+  Demo.FDis.count
+  Demo.FDis.freq
+
+#Step 3: Use Floss_Plotting.R to calculate FLOSS based on length distribution results, and plot figures
+#Output files:
+  FLOSS_Plot.pdf
 ```
+![](images/FLOSS.png)
+
 
 ## Ribosome release score (RRS)
 
